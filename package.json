@@ -1,0 +1,52 @@
+{
+  "name": "jwt-manager",
+  "version": "0.1.0",
+  "description": "Manager for JSON Web Tokens",
+  "private": true,
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "scripts": {
+    "build": "tsc -p . --removeComments true",
+    "build:dev": "tsc -p . --sourceMap true --declarationMap true",
+    "build:docs": "typedoc --mode file --out docs",
+    "cleanup": "del-cli dist",
+    "cleanup:docs": "del-cli docs",
+    "docs": "cd docs && serve -n --listen tcp://localhost:8080",
+    "lint:src": "tslint -p .",
+    "lint:test": "tslint -p test",
+    "prebuild": "npm run lint:src && npm run cleanup",
+    "prebuild:docs": "npm run cleanup:docs",
+    "pretest": "npm run lint:test",
+    "prepare": "npm run build",
+    "test": "echo \"Error: no target spesified\" && exit 1"
+  },
+  "keywords": [
+    "typescript",
+    "jwt",
+    "token",
+    "manager",
+    "authentication",
+    "auth"
+  ],
+  "author": {
+    "email": "mikalstordal@gmail.com",
+    "name": "Mikal Stordal"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jsonwebtoken": "^7.2.8",
+    "@types/node": "^10.12.1",
+    "@types/uuid": "^3.4.4",
+    "del-cli": "^1.1.0",
+    "jsonwebtoken": "^8.3.0",
+    "tslint": "^5.11.0",
+    "typedoc": "^0.13.0",
+    "typedoc-plugin-external-module-name": "^1.1.3",
+    "typescript": "^3.1.5",
+    "uuid": "^3.3.2"
+  },
+  "peerDependencies": {
+    "jsonwebtoken": "^8.0.0",
+    "uuid": "^3.0.0"
+  }
+}

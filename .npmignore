@@ -1,0 +1,9 @@
+.vscode/
+node_modules/
+docs/
+test/
+src/
+.env
+ts*.json
+*.tgz
+*.tar.gz
