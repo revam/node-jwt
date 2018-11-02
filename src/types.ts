@@ -5,8 +5,10 @@ export type Await<T> = T | Promise<T> | PromiseLike<T>;
 
 /**
  * Basic error handler.
+ * @param error The error thrown
+ * @param jwt The decoded token. May or may not be available.
  */
-export type ErrorHandler = (error: Error | any) => any;
+export type ErrorHandler<T, K extends keyof Properties<T> = never> = (error: Error | any, jwt?: JWT<T, K>) => any;
 
 type MethodNames<T> = { [P in keyof T]: T[P] extends (...args: any[]) => any ? P : never; }[keyof T];
 
@@ -99,7 +101,7 @@ export interface JWTManagerOptions<A extends any[], T, K extends keyof Propertie
   /**
    * Handle errors.
    */
-  onError?: ErrorHandler;
+  onError?: ErrorHandler<T, K>;
   /**
    * Either the secret for HMAC algorithms, or the PEM encoded public key for RSA and ECDSA.
    */

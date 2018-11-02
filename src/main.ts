@@ -24,10 +24,8 @@ const decode: <T>(token: string) => T
 /**
  * Simple class responsable for creating, verifying and invalidating JSON Web
  * Tokens. Additional fields added to token is left to the application to choose.
- *
- * Default export.
  */
-export default class JWTManager<A extends any[], T, K extends keyof Properties<T> = never> {
+export class JWTManager<A extends any[], T, K extends keyof Properties<T> = never> {
   /**
    * Either the secret for HMAC algorithms, or the PEM encoded public key for RSA and ECDSA.
    */
@@ -71,7 +69,7 @@ export default class JWTManager<A extends any[], T, K extends keyof Properties<T
   /**
    * Handles all errors thrown internally.
    */
-  private readonly onError: ErrorHandler = (error) => console.error(error);
+  private readonly onError: ErrorHandler<T, K> = (error) => console.error(error);
 
   /**
    * Find subject and additional properties to include in token.
@@ -120,6 +118,7 @@ export default class JWTManager<A extends any[], T, K extends keyof Properties<T
    * @returns a new JWT token if successful.
    */
   public async add(...args: A): Promise<string | undefined> {
+    let jwt: JWT<T, K> | undefined;
     try {
       const result = await this.findSubject(...args);
       if (result) {
@@ -142,12 +141,12 @@ export default class JWTManager<A extends any[], T, K extends keyof Properties<T
           jwtid: v4(),
           subject,
         });
-        const jwt = decode<JWT<T, K>>(token);
+        jwt = decode<JWT<T, K>>(token);
         await this.storage.add(jwt.jti, jwt.exp);
         return token;
       }
     } catch (error) {
-      await this.onError(error);
+      await this.onError(error, jwt);
     }
   }
 
@@ -156,8 +155,9 @@ export default class JWTManager<A extends any[], T, K extends keyof Properties<T
    * @param token  JSON Web Token to verify
    */
   public async verify(token: string): Promise<JWT<T, K> | undefined> {
+    let jwt: JWT<T, K> | undefined;
     try {
-      const jwt = await verify<JWT<T, K>>(token, this.secretOrPublicKey, {
+      jwt = await verify<JWT<T, K>>(token, this.secretOrPublicKey, {
         audience: this.audience,
         clockTolerance: this.expireTolerance,
         issuer: this.issuer,
@@ -172,7 +172,7 @@ export default class JWTManager<A extends any[], T, K extends keyof Properties<T
         return jwt;
       }
     } catch (error) {
-      console.error(error);
+      console.error(error, jwt);
       // invalidate token if any varification errors was thrown.
       if (error instanceof JsonWebTokenError) {
         await this.invalidate(token);
@@ -196,7 +196,7 @@ export default class JWTManager<A extends any[], T, K extends keyof Properties<T
    * Invalidates given JWT-token.
    * @param jwt JSON Web Token to invalidate, either stringified or decoded.
    */
-  public async invalidate(jwt: string | JWT<T, K>): Promise<boolean> {
+  public async invalidate(jwt?: string | JWT<T, K>): Promise<boolean> {
     if (typeof jwt === "string") {
       jwt = decode<JWT<T, K>>(jwt);
     }

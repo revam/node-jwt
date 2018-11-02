@@ -6,12 +6,6 @@ Manager for JSON Web Tokens
 
 ### Install from GitHub:
 
-#### Latest release:
-
-```sh
-$ npm install --save https://github.com/revam/node-jwt-manager/releases/download/latest/package.tgz
-```
-
 #### Spesific release:
 
 **Note:** Replace `$VERSION` with the version number.
