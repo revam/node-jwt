@@ -1,12 +1,12 @@
 {
   "name": "jwt-manager",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Manager for JSON Web Tokens",
   "private": true,
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
-    "build": "tsc -p . --removeComments true",
+    "build": "tsc -p .",
     "build:dev": "tsc -p . --sourceMap true --declarationMap true",
     "build:docs": "typedoc --mode file --out docs",
     "cleanup": "del-cli dist",
