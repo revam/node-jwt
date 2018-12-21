@@ -164,16 +164,16 @@ export class JWTManager<A extends any[], T, K extends keyof Properties<T> = neve
       });
       if (typeof jwt === "object") {
         if (! await this.storage.verify(jwt.jti)) {
-          throw new JsonWebTokenError("jwt identifier invalid.");
+          throw new JsonWebTokenError("invalid jwt identifier");
         }
         if (this.verifySubject && ! await this.verifySubject(jwt.sub)) {
-          throw new JsonWebTokenError("jwt subject invalid.");
+          throw new JsonWebTokenError("invalid jwt subject");
         }
         return jwt;
       }
     } catch (error) {
       console.error(error, jwt);
-      // invalidate token if any varification errors was thrown.
+      // invalidate token if any verification errors was thrown.
       if (error instanceof JsonWebTokenError) {
         await this.invalidate(token);
       }

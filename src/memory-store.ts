@@ -25,12 +25,16 @@ export class MemoryStore implements JWTIdStore {
     this.map.clear();
   }
 
-  private expire(key): boolean {
-    const now = Math.floor(Date.now() / 1000) + this.clockTolerance;
-    const expire = this.map.get(key);
-    if (expire && expire <= now) {
-      this.map.delete(key);
-      return true;
+  private expire(key: string): boolean {
+    const timestamp = this.map.get(key);
+    if (timestamp) {
+      // Substract the tolerance from the current time.
+      const now = Math.floor(Date.now() / 1000) - this.clockTolerance;
+      // And check if the timestamp is less than the current time.
+      if (timestamp < now) {
+        this.map.delete(key);
+        return true;
+      }
     }
     return false;
   }

@@ -91,11 +91,14 @@ export interface JWTManagerOptions<A extends any[], T, K extends keyof Propertie
    */
   issuer?: string;
   /**
-   *
+   * Token expiration time.
+   * Can be strings like "1 hour 10 min", "1h 10min" or "1 sec", or a number,
+   * given in units of seconds, till it expires.
    */
   expireTime?: string | number;
   /**
-   *
+   * The clock tolerance for time compare. For applications with system-clocks
+   * not 100% in sync with each other.
    */
   clockTolerance?: number;
   /**
