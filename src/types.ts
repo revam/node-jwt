@@ -27,20 +27,20 @@ export type Properties<T, K extends keyof T = never> = Pick<T, Exclude<keyof T, 
  * @param args Arguments as defined in `A`.
  * @returns subject, subject and additional properties, or undefined.
  */
-export type FindSubjectFunction<A extends any[], T, K extends keyof Properties<T> = never>
-  = (...args: A) => Await<string | [string, Pick<Properties<T>, K>?] | undefined>;
+export type FindSubjectFunction<A extends any[], T = never, K extends keyof Properties<T> = keyof Properties<T>>
+  = (...args: A) => Await<string | [string, Pick<Properties<T>, K>?] | ({ sub: string} & Pick<Properties<T>, K>) | undefined>;
 
 /**
  * Verify if subject is still valid.
  * @param subject Subject of JWT token.
  * @returns subject is valid.
  */
-export type VerifySubjectFunction = (subject: string) => Await<boolean>;
+export type VerifySubjectFunction = (subject: string) => Await<boolean | undefined>;
 
 /**
  * JSON Web Token, with additional properties from `T` as restricted by `K`.
  */
-export type JWT<T, K extends keyof Properties<T> = never> = Readonly<Pick<Properties<T>, K>> & {
+export type JWT<T = never, K extends keyof Properties<T> = keyof Properties<T>> = Readonly<Pick<Properties<T>, K>> & {
   /**
    * JWT Identifier
    */
@@ -67,7 +67,7 @@ export type JWT<T, K extends keyof Properties<T> = never> = Readonly<Pick<Proper
   readonly iat: number;
 };
 
-export interface JWTManagerOptions<A extends any[], T, K extends keyof Properties<T> = never> {
+export interface JWTManagerOptions<A extends any[], T = never, K extends keyof Properties<T> = keyof Properties<T>> {
   /**
    * Signature algorithm. Could be one of these values :
    * - HS256:    HMAC using SHA-256 hash algorithm (default)

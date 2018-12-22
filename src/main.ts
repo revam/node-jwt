@@ -25,7 +25,7 @@ const decode: <T>(token: string) => T
  * Simple class responsable for creating, verifying and invalidating JSON Web
  * Tokens. Additional fields added to token is left to the application to choose.
  */
-export class JWTManager<A extends any[], T, K extends keyof Properties<T> = never> {
+export class JWTManager<A extends any[], T = never, K extends keyof Properties<T> = keyof Properties<T>> {
   /**
    * Either the secret for HMAC algorithms, or the PEM encoded public key for RSA and ECDSA.
    */
@@ -69,7 +69,7 @@ export class JWTManager<A extends any[], T, K extends keyof Properties<T> = neve
   /**
    * Handles all errors thrown internally.
    */
-  private readonly onError: ErrorHandler<T, K> = (error) => console.error(error);
+  private readonly onError: ErrorHandler<T, K>;
 
   /**
    * Find subject and additional properties to include in token.
@@ -103,9 +103,7 @@ export class JWTManager<A extends any[], T, K extends keyof Properties<T> = neve
     this.expireTime = expireTime;
     this.expireTolerance = clockTolerance;
     this.storage = storage || new MemoryStore(clockTolerance);
-    if (typeof onError === "function") {
-      this.onError = onError;
-    }
+    this.onError = typeof onError === "function" ? onError :  (error) => console.error(error);
     this.secretOrPublicKey = secretOrPublicKey instanceof Buffer
       ? secretOrPublicKey : Buffer.from(secretOrPublicKey);
     this.secretOrPrivateKey = secretOrPrivateKey instanceof Buffer
@@ -124,10 +122,17 @@ export class JWTManager<A extends any[], T, K extends keyof Properties<T> = neve
       if (result) {
         let subject: string | undefined;
         let payload: Properties<T, K> | {} = {};
-        if (result instanceof Array) {
-          subject = result[0];
-          if (result[1]) {
-            payload = result[1];
+        if (typeof result === "object") {
+          if (result instanceof Array) {
+            subject = result[0];
+            if (result[1]) {
+              payload = result[1];
+            }
+          }
+          else {
+            subject = result.sub;
+            delete result.sub;
+            payload = result;
           }
         }
         else {
