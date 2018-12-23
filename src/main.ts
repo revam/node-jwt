@@ -157,7 +157,7 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
 
   /**
    * Verifies the JWT-token.
-   * @param token  JSON Web Token to verify
+   * @param token JSON Web Token to verify
    */
   public async verify(token: string): Promise<JWT<T, K> | undefined> {
     let jwt: JWT<T, K> | undefined;
@@ -177,7 +177,7 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
         return jwt;
       }
     } catch (error) {
-      console.error(error, jwt);
+      await this.onError(error, jwt);
       // invalidate token if any verification errors was thrown.
       if (error instanceof JsonWebTokenError) {
         await this.invalidate(token);
@@ -205,10 +205,23 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
     if (typeof jwt === "string") {
       jwt = decode<JWT<T, K>>(jwt);
     }
-    if (typeof jwt === "object" && jwt.jti) {
-      return this.storage.invalidate(jwt.jti);
+    // The storage may throw, so we wrap it in a try..catch clause
+    try {
+      if (jwt && jwt.jti && await this.storage.invalidate(jwt.jti)) {
+        return true;
+      }
+    } catch (error) {
+      await this.onError(error, jwt);
     }
     return false;
+  }
+
+  /**
+   * Decode a token without verifying if it is valid or safe to use.
+   * @param token JSON Web Token to decode.
+   */
+  public decode(token: string): JWT<T, K> | undefined {
+    return decode<JWT<T, K>>(token);
   }
 }
 

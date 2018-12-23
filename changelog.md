@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.1.5] - 2018-12-23
+
+### Added
+
+- A new method `decode` to decode tokens into javascript objects without
+  verifying first. Be careful when using.
+
+### Fixed
+
+- Not all thrown errors from methods of `JWTManager` was handled by the
+  `onError` method of the manager.
+
 ## [0.1.4] - 2018-12-22
 
 ### Changed
@@ -59,7 +71,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Initial release
 
-[Unreleased]: https://github.com/revam/node-jwt-manager/compare/v0.1.4...HEAD
+[Unreleased]: https://github.com/revam/node-jwt-manager/compare/v0.1.5...HEAD
+[0.1.5]: https://github.com/revam/node-jwt-manager/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/revam/node-jwt-manager/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/revam/node-jwt-manager/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/revam/node-jwt-manager/compare/v0.1.1...v0.1.2
