@@ -65,6 +65,10 @@ export type JWT<T = never, K extends keyof Properties<T> = keyof Properties<T>> 
    * Issued At (in seconds)
    */
   readonly iat: number;
+  /**
+   * Not (valid) Before (in seconds)
+   */
+  readonly nbf?: number;
 };
 
 export interface JWTManagerOptions<A extends any[], T = never, K extends keyof Properties<T> = keyof Properties<T>> {
@@ -83,22 +87,23 @@ export interface JWTManagerOptions<A extends any[], T = never, K extends keyof P
    */
   algorithm?: "HS256" | "HS384" | "HS512" | "RS256" | "RS384" | "RS512" | "ES256" | "ES384" | "ES512" | "none";
   /**
-   * Valid audience. Defaults to the same as property `issuer`.
+   * Valid audience for token. Defaults to the same as value as field `issuer`.
    */
   audience?: string | string[];
   /**
-   * Issuer. Defaults to `"localhost"`.
+   * Issuer authority. Defaults to `"localhost"`.
    */
   issuer?: string;
   /**
    * Token expiration time.
-   * Can be strings like "1 hour 10 min", "1h 10min" or "1 sec", or a number,
-   * given in units of seconds, till it expires.
+   * Expressed in seconds or a string describing a timespan, e.g. "1 min".
+   * Defaults to `3600`.
    */
   expireTime?: string | number;
   /**
    * The clock tolerance for time compare. For applications with system-clocks
    * not 100% in sync with each other.
+   * Expressed in seconds.
    */
   clockTolerance?: number;
   /**
@@ -125,6 +130,19 @@ export interface JWTManagerOptions<A extends any[], T = never, K extends keyof P
    * Verify if subject is still valid.
    */
   verifySubject?: VerifySubjectFunction;
+}
+
+export interface JWTGenerateOptions<A extends any[]> {
+  /**
+   * Arguments are forwarded to the `FindSubjectFunction` registered with the
+   * manager.
+   */
+  args: A;
+  /**
+   * Not valid before this timespan have past.
+   * Expressed in seconds or a string describing a timespan, e.g. "1 min".
+   */
+  notBefore?: string | number;
 }
 
 /**

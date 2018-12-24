@@ -3,17 +3,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>jwt-manager</title>
+	<title>JWTGenerateOptions | jwt-manager</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">jwt-manager</a>
+					<a href="../index.html" class="title">jwt-manager</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -53,149 +53,157 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="globals.html">Globals</a>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="jwtgenerateoptions.html">JWTGenerateOptions</a>
 				</li>
 			</ul>
-			<h1> jwt-manager</h1>
+			<h1>Interface JWTGenerateOptions&lt;A&gt;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<h1 id="jwt-manager">jwt-manager</h1>
-				<p>Manager for JSON Web Tokens</p>
-				<h2 id="install">Install</h2>
-				<h3 id="install-from-github-">Install from GitHub:</h3>
-				<h4 id="spesific-release-">Spesific release:</h4>
-				<p><strong>Note:</strong> Replace <code>$VERSION</code> with the version number.</p>
-				<pre><code class="language-sh">$ npm install --save https://github.com/revam/node-jwt-manager/releases/download/v<span class="hljs-variable">$VERSION</span>/package.tgz</code></pre>
-				<h3 id="install-from-git-lan-">Install from git.lan:</h3>
-				<p>Internet people can ignore this section.</p>
-				<h4 id="latest-release-">Latest release:</h4>
-				<pre><code class="language-sh">$ npm install --save https://git.lan/mist@node/jwt-manager@latest/npm-pack.tgz</code></pre>
-				<h4 id="spesific-release-">Spesific release:</h4>
-				<p><strong>Note:</strong> Replace <code>$VERSION</code> with the version number.</p>
-				<pre><code class="language-sh">$ npm install --save https://git.lan/mist@node/jwt-manager@v<span class="hljs-variable">$VERSION</span>/npm-pack.tgz</code></pre>
-				<h2 id="usage">Usage</h2>
-				<p><strong>Note:</strong> <code>await</code> is not actually available in the global context, but let&#39;s
-				assume it is for this example.</p>
-				<pre><code class="language-js"><span class="hljs-keyword">import</span> JWTManager <span class="hljs-keyword">from</span> <span class="hljs-string">"jwt-manager"</span>;
-
-<span class="hljs-comment">// Example user</span>
-<span class="hljs-keyword">const</span> user = {
-  <span class="hljs-attr">id</span>: <span class="hljs-string">"00000000-0000-0000-0000-000000000000"</span>,
-  <span class="hljs-attr">name</span>: <span class="hljs-string">"John Smith"</span>,
-  <span class="hljs-attr">username</span>: <span class="hljs-string">"josm"</span>,
-};
-
-<span class="hljs-keyword">const</span> jm = <span class="hljs-keyword">new</span> JWTManager({
-  findSubject(test, test2, ...testRest) {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"%s %s %s"</span>, test, test2, testRest.join(<span class="hljs-string">" "</span>));
-    <span class="hljs-keyword">if</span> (test === <span class="hljs-string">"this"</span> &amp;&amp; test2 === <span class="hljs-string">"is"</span> &amp;&amp; testRest[<span class="hljs-number">0</span>] === <span class="hljs-string">"SPARTA"</span>) {
-      <span class="hljs-keyword">return</span> [user.id, {<span class="hljs-attr">name</span>: user.name}]
-    }
-  }
-});
-
-<span class="hljs-keyword">let</span> token;
-
-<span class="hljs-comment">// We know if we provid the three arguments "this", "is", and "SPARTA" we get</span>
-<span class="hljs-comment">// a signed token for our user data.</span>
-token = <span class="hljs-keyword">await</span> jm.add({ <span class="hljs-attr">args</span>: [<span class="hljs-string">"this"</span>, <span class="hljs-string">"is"</span>, <span class="hljs-string">"SPARTA"</span>]}); <span class="hljs-comment">// token is "&lt;header&gt;.&lt;payload&gt;.&lt;signature&gt;"</span>
-
-<span class="hljs-comment">// If we cannot find a subject with given arguments, then no token will be returned.</span>
-token = <span class="hljs-keyword">await</span> jm.add({ <span class="hljs-attr">args</span>: [<span class="hljs-string">"this"</span>, <span class="hljs-string">"is"</span>, <span class="hljs-string">"GREEK"</span>]}); <span class="hljs-comment">// token is undefined</span>
-
-<span class="hljs-comment">// Verifies an existing __signed__ token, and returns its decoded value if signature matches.</span>
-<span class="hljs-keyword">let</span> obj = <span class="hljs-keyword">await</span> jm.verify(token);
-
-<span class="hljs-comment">// Decodes token without verifying signature or content.</span>
-<span class="hljs-keyword">let</span> obj2 = jm.decode(token);
-
-<span class="hljs-comment">// invalidates token or obj.</span>
-<span class="hljs-keyword">await</span> jm.invalidate(token || obj); <span class="hljs-comment">// true if token or obj is now invalid.</span></code></pre>
-				<h2 id="documentation">Documentation</h2>
-				<p>Documentation is available online at
-					<a href="https://revam.github.io/node-jwt-manager/">GitHub Pages</a>, or locally at
-				<a href="http://localhost:8080/">http://localhost:8080/</a> with the following command:</p>
-				<pre><code class="language-sh">$ npm run-script docs</code></pre>
-				<h2 id="typescript">Typescript</h2>
-				<p>This module includes a <a href="https://www.typescriptlang.org/">TypeScript</a>
-					declaration file to enable auto complete in compatible editors and type
-					information for TypeScript projects. This module depends on the Node.js
-				types, so install <code>@types/node</code>:</p>
-				<pre><code class="language-sh">npm install --save-dev @types/node</code></pre>
-				<h2 id="changelog-and-versioning">Changelog and versioning</h2>
-				<p>All notable changes to this project will be documented in <a href="./changelog.md">changelog.md</a>.</p>
-				<p>The format is based on <a href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>
-				and this project adheres to <a href="http://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-				<h2 id="license">License</h2>
-				<p>This project is licensed under the MIT license. See <a href="./license">license</a> for the
-				full terms.</p>
-			</div>
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>A<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">JWTGenerateOptions</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="jwtgenerateoptions.html#args" class="tsd-kind-icon">args</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="jwtgenerateoptions.html#notbefore" class="tsd-kind-icon">not<wbr>Before</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="args" class="tsd-anchor"></a>
+					<h3>args</h3>
+					<div class="tsd-signature tsd-kind-icon">args<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">A</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in types.ts:140</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Arguments are forwarded to the <code>FindSubjectFunction</code> registered with the
+							manager.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="notbefore" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> not<wbr>Before</h3>
+					<div class="tsd-signature tsd-kind-icon">not<wbr>Before<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in types.ts:145</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Not valid before this timespan have past.
+							Expressed in seconds or a string describing a timespan, e.g. &quot;1 min&quot;.</p>
+						</div>
+					</div>
+				</section>
+			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/jwtmanager.html" class="tsd-kind-icon">JWTManager</a>
+						<a href="../classes/jwtmanager.html" class="tsd-kind-icon">JWTManager</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/memorystore.html" class="tsd-kind-icon">Memory<wbr>Store</a>
+						<a href="../classes/memorystore.html" class="tsd-kind-icon">Memory<wbr>Store</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/jwtgenerateoptions.html" class="tsd-kind-icon">JWTGenerate<wbr>Options</a>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-has-type-parameter">
+						<a href="jwtgenerateoptions.html" class="tsd-kind-icon">JWTGenerate<wbr>Options</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="jwtgenerateoptions.html#args" class="tsd-kind-icon">args</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="jwtgenerateoptions.html#notbefore" class="tsd-kind-icon">not<wbr>Before</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/jwtidstore.html" class="tsd-kind-icon">JWTId<wbr>Store</a>
+						<a href="jwtidstore.html" class="tsd-kind-icon">JWTId<wbr>Store</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/jwtmanageroptions.html" class="tsd-kind-icon">JWTManager<wbr>Options</a>
+						<a href="jwtmanageroptions.html" class="tsd-kind-icon">JWTManager<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#await" class="tsd-kind-icon">Await</a>
+						<a href="../globals.html#await" class="tsd-kind-icon">Await</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#errorhandler" class="tsd-kind-icon">Error<wbr>Handler</a>
+						<a href="../globals.html#errorhandler" class="tsd-kind-icon">Error<wbr>Handler</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#findsubjectfunction" class="tsd-kind-icon">Find<wbr>Subject<wbr>Function</a>
+						<a href="../globals.html#findsubjectfunction" class="tsd-kind-icon">Find<wbr>Subject<wbr>Function</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#jwt" class="tsd-kind-icon">JWT</a>
+						<a href="../globals.html#jwt" class="tsd-kind-icon">JWT</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
-						<a href="globals.html#methodnames" class="tsd-kind-icon">Method<wbr>Names</a>
+						<a href="../globals.html#methodnames" class="tsd-kind-icon">Method<wbr>Names</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#methods" class="tsd-kind-icon">Methods</a>
+						<a href="../globals.html#methods" class="tsd-kind-icon">Methods</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#properties" class="tsd-kind-icon">Properties</a>
+						<a href="../globals.html#properties" class="tsd-kind-icon">Properties</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#verifysubjectfunction" class="tsd-kind-icon">Verify<wbr>Subject<wbr>Function</a>
+						<a href="../globals.html#verifysubjectfunction" class="tsd-kind-icon">Verify<wbr>Subject<wbr>Function</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#sign" class="tsd-kind-icon">sign</a>
+						<a href="../globals.html#sign" class="tsd-kind-icon">sign</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#verify" class="tsd-kind-icon">verify</a>
+						<a href="../globals.html#verify" class="tsd-kind-icon">verify</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#decode" class="tsd-kind-icon">decode</a>
+						<a href="../globals.html#decode" class="tsd-kind-icon">decode</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#pick" class="tsd-kind-icon">pick</a>
+						<a href="../globals.html#pick" class="tsd-kind-icon">pick</a>
 					</li>
 				</ul>
 			</nav>
@@ -265,7 +273,7 @@ token = <span class="hljs-keyword">await</span> jm.add({ <span class="hljs-attr"
 	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

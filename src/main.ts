@@ -9,7 +9,16 @@ import {
 import { promisify } from "util";
 import { v4 } from "uuid";
 import { MemoryStore } from "./memory-store";
-import { ErrorHandler, FindSubjectFunction, JWT, JWTIdStore, JWTManagerOptions, Properties, VerifySubjectFunction } from "./types";
+import {
+  ErrorHandler,
+  FindSubjectFunction,
+  JWT,
+  JWTGenerateOptions,
+  JWTIdStore,
+  JWTManagerOptions,
+  Properties,
+  VerifySubjectFunction,
+} from "./types";
 
 export * from "./memory-store";
 export * from "./types";
@@ -112,13 +121,13 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
 
   /**
    * Create a new token for user if subject can be abstracted from
-   * @param args Arguments are forwarded to a `FindSubjectFunction`.
+   * @param options Generate options. Args must be supplied.
    * @returns a new JWT token if successful.
    */
-  public async add(...args: A): Promise<string | undefined> {
+  public async generate(options: JWTGenerateOptions<A>): Promise<string | undefined> {
     let jwt: JWT<T, K> | undefined;
     try {
-      const result = await this.findSubject(...args);
+      const result = await this.findSubject(...options.args);
       if (result) {
         let subject: string | undefined;
         let payload: Properties<T, K> | {} = {};
@@ -138,14 +147,18 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
         else {
           subject = result;
         }
-        const token = await sign(payload, this.secretOrPrivateKey, {
+        const signOptions: SignOptions = {
           algorithm: this.algorithm,
           audience: this.audience,
           expiresIn: this.expireTime,
           issuer: this.issuer,
           jwtid: v4(),
           subject,
-        });
+        };
+        if (options.notBefore) {
+          signOptions.notBefore = options.notBefore;
+        }
+        const token = await sign(payload, this.secretOrPrivateKey, signOptions);
         jwt = decode<JWT<T, K>>(token);
         await this.storage.add(jwt.jti, jwt.exp);
         return token;
@@ -158,12 +171,14 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
   /**
    * Verifies the JWT-token.
    * @param token JSON Web Token to verify
+   * @param audience Audience to check for. Defaults to provided audience for
+   *                 manager.
    */
-  public async verify(token: string): Promise<JWT<T, K> | undefined> {
+  public async verify(token: string = "", audience: string | string[] = this.audience): Promise<JWT<T, K> | undefined> {
     let jwt: JWT<T, K> | undefined;
     try {
       jwt = await verify<JWT<T, K>>(token, this.secretOrPublicKey, {
-        audience: this.audience,
+        audience,
         clockTolerance: this.expireTolerance,
         issuer: this.issuer,
       });
@@ -186,11 +201,11 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
   }
 
   /**
-   * Verifies the JWT-token extracted from a valid authorization header.
+   * Verifies the JWT-token extracted *only** from a valid authorization header.
    * @param header Value of 'Authorization' header.
    * @param schema Valid authorization schema to use.
    */
-  public async verifyHeader(header: string, schema: string = "bearer"): Promise<JWT<T, K> | undefined> {
+  public async verifyHeader(header: string = "", schema: string = "bearer"): Promise<JWT<T, K> | undefined> {
     const [schemaValue, token] = header.split(" ");
     if (schemaValue.toLowerCase() === schema && token) {
       return this.verify(token);
@@ -203,7 +218,7 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
    */
   public async invalidate(jwt?: string | JWT<T, K>): Promise<boolean> {
     if (typeof jwt === "string") {
-      jwt = decode<JWT<T, K>>(jwt);
+      jwt = this.decode(jwt);
     }
     // The storage may throw, so we wrap it in a try..catch clause
     try {
@@ -220,8 +235,8 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
    * Decode a token without verifying if it is valid or safe to use.
    * @param token JSON Web Token to decode.
    */
-  public decode(token: string): JWT<T, K> | undefined {
-    return decode<JWT<T, K>>(token);
+  public decode(token: string = ""): JWT<T, K> | undefined {
+    return token ? decode<JWT<T, K>>(token) : undefined;
   }
 }
 

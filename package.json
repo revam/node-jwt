@@ -1,6 +1,6 @@
 {
   "name": "jwt-manager",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "Manager for JSON Web Tokens",
   "private": true,
   "main": "dist/main.js",

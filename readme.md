@@ -60,13 +60,16 @@ let token;
 
 // We know if we provid the three arguments "this", "is", and "SPARTA" we get
 // a signed token for our user data.
-token = await jm.add("this", "is", "SPARTA"); // token is "<header>.<payload>.<signature>"
+token = await jm.add({ args: ["this", "is", "SPARTA"]}); // token is "<header>.<payload>.<signature>"
 
 // If we cannot find a subject with given arguments, then no token will be returned.
-token = await jm.add("this", "is", "GREEK"); // token is undefined
+token = await jm.add({ args: ["this", "is", "GREEK"]}); // token is undefined
 
 // Verifies an existing __signed__ token, and returns its decoded value if signature matches.
 let obj = await jm.verify(token);
+
+// Decodes token without verifying signature or content.
+let obj2 = jm.decode(token);
 
 // invalidates token or obj.
 await jm.invalidate(token || obj); // true if token or obj is now invalid.
