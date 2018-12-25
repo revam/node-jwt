@@ -38,6 +38,12 @@ export type FindSubjectFunction<A extends any[], T = never, K extends keyof Prop
 export type VerifySubjectFunction = (subject: string) => Await<boolean | undefined>;
 
 /**
+ * Generate an unique identifier for token.
+ * @returns unique identifier.
+ */
+export type GenerateIDFunction = () => Await<string>;
+
+/**
  * JSON Web Token, with additional properties from `T` as restricted by `K`.
  */
 export type JWT<T = never, K extends keyof Properties<T> = keyof Properties<T>> = Readonly<Pick<Properties<T>, K>> & {
@@ -130,6 +136,10 @@ export interface JWTManagerOptions<A extends any[], T = never, K extends keyof P
    * Verify if subject is still valid.
    */
   verifySubject?: VerifySubjectFunction;
+  /**
+   * Generate an unique identifier for token.
+   */
+  generateID: GenerateIDFunction;
 }
 
 export interface JWTGenerateOptions<A extends any[]> {

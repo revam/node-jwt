@@ -7,11 +7,11 @@ import {
   VerifyOptions,
 } from "jsonwebtoken";
 import { promisify } from "util";
-import { v4 } from "uuid";
 import { MemoryStore } from "./memory-store";
 import {
   ErrorHandler,
   FindSubjectFunction,
+  GenerateIDFunction,
   JWT,
   JWTGenerateOptions,
   JWTIdStore,
@@ -90,12 +90,18 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
    */
   private readonly verifySubject?: VerifySubjectFunction;
 
+  /**
+   * Generate an unique identifier for token.
+   */
+  private readonly generateID: GenerateIDFunction;
+
   public constructor(options: JWTManagerOptions<A, T, K>);
   public constructor({
     algorithm = "HS256",
     clockTolerance = 10,
     expireTime = 3600, // 60 * 60 = 3,600
     findSubject,
+    generateID,
     storage,
     issuer = "localhost",
     audience = issuer,
@@ -107,6 +113,7 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
     this.algorithm = algorithm;
     this.findSubject = findSubject;
     this.verifySubject = verifySubject;
+    this.generateID = generateID;
     this.issuer = issuer;
     this.audience = typeof audience === "string" ? [audience] : audience;
     this.expireTime = expireTime;
@@ -152,7 +159,7 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
           audience: this.audience,
           expiresIn: this.expireTime,
           issuer: this.issuer,
-          jwtid: v4(),
+          jwtid: await this.generateID(),
           subject,
         };
         if (options.notBefore) {

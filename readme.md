@@ -1,6 +1,6 @@
 # jwt-manager
 
-Manager for JSON Web Tokens
+Server-side manager for active JSON Web Tokens (JWTs)
 
 ## Install
 

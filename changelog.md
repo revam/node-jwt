@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.2.1] - 2018-12-25
+
+### Added
+
+- A new function type `GenerateIDFunction`.
+
+### Changed
+
+- Token ID generation is now supplied to the constructor, and should always
+  be unique.
+
+- Updated package description.
+
+### Removed
+
+- Removed package "uuid" as a peer-dependency.
+
 ## [0.2.0] - 2018-12-24
 
 ### Added
@@ -90,7 +107,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Initial release
 
-[Unreleased]: https://github.com/revam/node-jwt-manager/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/revam/node-jwt-manager/compare/v0.2.1...HEAD
+[0.2.0]: https://github.com/revam/node-jwt-manager/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/revam/node-jwt-manager/compare/v0.1.5...v0.2.0
 [0.1.5]: https://github.com/revam/node-jwt-manager/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/revam/node-jwt-manager/compare/v0.1.3...v0.1.4
