@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.2.2] - 2018-12-26
+
+### Added
+
+- Added a new export class `Signal`.
+  (Signal provider may be replaced by a package in a future release.)
+
+- Added basic signals `onGenerate`, `onVerify`, `onInvalidate` and `onError`.
+
+### Changed
+
+- The `verifyHeader` method now accepts an audience instead of schema. The
+  schema it verifies is now hard-coded, and the audience is passed on to the
+  `verify` method.
+
+- All non-fatal errors are now properly handed over to the `onError` signal.
+
+### Removed
+
+- Removed `onError` field from constructor options (`JWTManagerOptions`).
+  Users should register listeners to the `onError` signal on the manager
+  instance instead.
+
 ## [0.2.1] - 2018-12-25
 
 ### Added
@@ -107,8 +130,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Initial release
 
-[Unreleased]: https://github.com/revam/node-jwt-manager/compare/v0.2.1...HEAD
-[0.2.0]: https://github.com/revam/node-jwt-manager/compare/v0.2.0...v0.2.1
+[Unreleased]: https://github.com/revam/node-jwt-manager/compare/v0.2.2...HEAD
+[0.2.2]: https://github.com/revam/node-jwt-manager/compare/v0.2.1...v0.2.2
+[0.2.1]: https://github.com/revam/node-jwt-manager/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/revam/node-jwt-manager/compare/v0.1.5...v0.2.0
 [0.1.5]: https://github.com/revam/node-jwt-manager/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/revam/node-jwt-manager/compare/v0.1.3...v0.1.4

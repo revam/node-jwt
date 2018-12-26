@@ -106,7 +106,7 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="jwtmanager.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-private-protected">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="jwtmanager.html#algorithm" class="tsd-kind-icon">algorithm</a></li>
@@ -116,7 +116,10 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="jwtmanager.html#findsubject" class="tsd-kind-icon">find<wbr>Subject</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="jwtmanager.html#generateid" class="tsd-kind-icon">generateID</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="jwtmanager.html#issuer" class="tsd-kind-icon">issuer</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="jwtmanager.html#onerror" class="tsd-kind-icon">on<wbr>Error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="jwtmanager.html#onerror" class="tsd-kind-icon">on<wbr>Error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="jwtmanager.html#ongenerate" class="tsd-kind-icon">on<wbr>Generate</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="jwtmanager.html#oninvalidate" class="tsd-kind-icon">on<wbr>Invalidate</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="jwtmanager.html#onverify" class="tsd-kind-icon">on<wbr>Verify</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="jwtmanager.html#secretorprivatekey" class="tsd-kind-icon">secret<wbr>OrPrivate<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="jwtmanager.html#secretorpublickey" class="tsd-kind-icon">secret<wbr>OrPublic<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="jwtmanager.html#storage" class="tsd-kind-icon">storage</a></li>
@@ -148,7 +151,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in main.ts:96</li>
+									<li>Defined in main.ts:119</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -162,7 +165,7 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="algorithm" class="tsd-anchor"></a>
@@ -170,7 +173,7 @@
 					<div class="tsd-signature tsd-kind-icon">algorithm<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in main.ts:51</li>
+							<li>Defined in main.ts:52</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -185,7 +188,7 @@
 					<div class="tsd-signature tsd-kind-icon">audience<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in main.ts:56</li>
+							<li>Defined in main.ts:57</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -200,7 +203,7 @@
 					<div class="tsd-signature tsd-kind-icon">expire<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in main.ts:66</li>
+							<li>Defined in main.ts:67</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -215,7 +218,7 @@
 					<div class="tsd-signature tsd-kind-icon">expire<wbr>Tolerance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in main.ts:71</li>
+							<li>Defined in main.ts:72</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -250,7 +253,7 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Generate an unique identifier for token.</p>
+							<p>Generate an unique identifier for JWT token.</p>
 						</div>
 					</div>
 				</section>
@@ -260,7 +263,7 @@
 					<div class="tsd-signature tsd-kind-icon">issuer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in main.ts:61</li>
+							<li>Defined in main.ts:62</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -269,18 +272,66 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="onerror" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> on<wbr>Error</h3>
-					<div class="tsd-signature tsd-kind-icon">on<wbr>Error<span class="tsd-signature-symbol">:</span> <a href="../globals.html#errorhandler" class="tsd-signature-type">ErrorHandler</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<h3>on<wbr>Error</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Error<span class="tsd-signature-symbol">:</span> <a href="signal.html" class="tsd-signature-type">Signal</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Signal()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in main.ts:81</li>
+							<li>Defined in main.ts:119</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Handles all errors thrown internally.</p>
+							<p>Dispatched when any error is thrown from other methods and/or signals.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="ongenerate" class="tsd-anchor"></a>
+					<h3>on<wbr>Generate</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Generate<span class="tsd-signature-symbol">:</span> <a href="signal.html" class="tsd-signature-type">Signal</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../globals.html#jwt" class="tsd-signature-type">JWT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Signal()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in main.ts:102</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Dispatched on successful generation of a new token.
+							Errors thrown by listeners are handled in the <code>onError</code> signal.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="oninvalidate" class="tsd-anchor"></a>
+					<h3>on<wbr>Invalidate</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Invalidate<span class="tsd-signature-symbol">:</span> <a href="signal.html" class="tsd-signature-type">Signal</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../globals.html#jwt" class="tsd-signature-type">JWT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Signal()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in main.ts:114</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Dispatched on successful invalidation of a token.
+							Errors thrown by listeners are handled in the <code>onError</code> signal.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="onverify" class="tsd-anchor"></a>
+					<h3>on<wbr>Verify</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Verify<span class="tsd-signature-symbol">:</span> <a href="signal.html" class="tsd-signature-type">Signal</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../globals.html#jwt" class="tsd-signature-type">JWT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Signal()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in main.ts:108</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Dispatched on successful verification of a token.
+							Errors thrown by listeners are handled in the <code>onError</code> signal.</p>
 						</div>
 					</div>
 				</section>
@@ -290,7 +341,7 @@
 					<div class="tsd-signature tsd-kind-icon">secret<wbr>OrPrivate<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in main.ts:46</li>
+							<li>Defined in main.ts:47</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -305,7 +356,7 @@
 					<div class="tsd-signature tsd-kind-icon">secret<wbr>OrPublic<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in main.ts:41</li>
+							<li>Defined in main.ts:42</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -320,7 +371,7 @@
 					<div class="tsd-signature tsd-kind-icon">storage<span class="tsd-signature-symbol">:</span> <a href="../interfaces/jwtidstore.html" class="tsd-signature-type">JWTIdStore</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in main.ts:76</li>
+							<li>Defined in main.ts:77</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -357,7 +408,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in main.ts:245</li>
+									<li>Defined in main.ts:270</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -391,7 +442,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in main.ts:134</li>
+									<li>Defined in main.ts:155</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -423,7 +474,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in main.ts:226</li>
+									<li>Defined in main.ts:250</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -454,7 +505,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in main.ts:184</li>
+									<li>Defined in main.ts:206</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -486,13 +537,13 @@
 					<a name="verifyheader" class="tsd-anchor"></a>
 					<h3>verify<wbr>Header</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">verify<wbr>Header<span class="tsd-signature-symbol">(</span>header<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, schema<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#jwt" class="tsd-signature-type">JWT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">verify<wbr>Header<span class="tsd-signature-symbol">(</span>header<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, audience<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#jwt" class="tsd-signature-type">JWT</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in main.ts:215</li>
+									<li>Defined in main.ts:239</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -509,9 +560,10 @@
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> schema: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;bearer&quot;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> audience: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Valid authorization schema to use.</p>
+										<p>Audience to check for. Defaults to provided audience for
+										manager.</p>
 									</div>
 								</li>
 							</ul>
@@ -560,8 +612,17 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 								<a href="jwtmanager.html#issuer" class="tsd-kind-icon">issuer</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="jwtmanager.html#onerror" class="tsd-kind-icon">on<wbr>Error</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="jwtmanager.html#ongenerate" class="tsd-kind-icon">on<wbr>Generate</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="jwtmanager.html#oninvalidate" class="tsd-kind-icon">on<wbr>Invalidate</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="jwtmanager.html#onverify" class="tsd-kind-icon">on<wbr>Verify</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="jwtmanager.html#secretorprivatekey" class="tsd-kind-icon">secret<wbr>OrPrivate<wbr>Key</a>
@@ -597,6 +658,9 @@
 					<li class=" tsd-kind-class">
 						<a href="memorystore.html" class="tsd-kind-icon">Memory<wbr>Store</a>
 					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="signal.html" class="tsd-kind-icon">Signal</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="../interfaces/jwtgenerateoptions.html" class="tsd-kind-icon">JWTGenerate<wbr>Options</a>
 					</li>
@@ -610,9 +674,6 @@
 						<a href="../globals.html#await" class="tsd-kind-icon">Await</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="../globals.html#errorhandler" class="tsd-kind-icon">Error<wbr>Handler</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="../globals.html#findsubjectfunction" class="tsd-kind-icon">Find<wbr>Subject<wbr>Function</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
@@ -620,6 +681,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="../globals.html#jwt" class="tsd-kind-icon">JWT</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#listener" class="tsd-kind-icon">Listener</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
 						<a href="../globals.html#methodnames" class="tsd-kind-icon">Method<wbr>Names</a>

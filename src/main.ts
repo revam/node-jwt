@@ -8,8 +8,8 @@ import {
 } from "jsonwebtoken";
 import { promisify } from "util";
 import { MemoryStore } from "./memory-store";
+import { Signal } from "./signal";
 import {
-  ErrorHandler,
   FindSubjectFunction,
   GenerateIDFunction,
   JWT,
@@ -21,12 +21,13 @@ import {
 } from "./types";
 
 export * from "./memory-store";
+export * from "./signal";
 export * from "./types";
 
-const sign: <T>(payload: T, secret: string | Buffer, options?: SignOptions) => Promise<string>
-  = promisify<any, string | Buffer, string>(SIGN);
-const verify: <T>(token: string, secret: string | Buffer, options?: VerifyOptions) => Promise<T>
-  = promisify(VERIFY);
+const sign: <T>(payload: T, secret: Buffer, options?: SignOptions) => Promise<string>
+  = promisify<any, Buffer, string>(SIGN);
+const verify: <T>(token: string, secret: Buffer, options?: VerifyOptions) => Promise<T>
+  = promisify<string, Buffer, any>(VERIFY);
 const decode: <T>(token: string) => T
   = (token) => DECODE(token, { json: true }) as any;
 
@@ -78,7 +79,6 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
   /**
    * Handles all errors thrown internally.
    */
-  private readonly onError: ErrorHandler<T, K>;
 
   /**
    * Find subject and additional properties to include in token.
@@ -91,9 +91,32 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
   private readonly verifySubject?: VerifySubjectFunction;
 
   /**
-   * Generate an unique identifier for token.
+   * Generate an unique identifier for JWT token.
    */
   private readonly generateID: GenerateIDFunction;
+
+  /**
+   * Dispatched on successful generation of a new token.
+   * Errors thrown by listeners are handled in the `onError` signal.
+   */
+  public readonly onGenerate: Signal<[JWT<T, K>]> = new Signal();
+
+  /**
+   * Dispatched on successful verification of a token.
+   * Errors thrown by listeners are handled in the `onError` signal.
+   */
+  public readonly onVerify: Signal<[JWT<T, K>]> = new Signal();
+
+  /**
+   * Dispatched on successful invalidation of a token.
+   * Errors thrown by listeners are handled in the `onError` signal.
+   */
+  public readonly onInvalidate: Signal<[JWT<T, K>]> = new Signal();
+
+  /**
+   * Dispatched when any error is thrown from other methods and/or signals.
+   */
+  public readonly onError: Signal<[any, JWT<T, K>?]> = new Signal();
 
   public constructor(options: JWTManagerOptions<A, T, K>);
   public constructor({
@@ -105,7 +128,6 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
     storage,
     issuer = "localhost",
     audience = issuer,
-    onError,
     secretOrPublicKey = "",
     secretOrPrivateKey = secretOrPublicKey,
     verifySubject,
@@ -119,7 +141,6 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
     this.expireTime = expireTime;
     this.expireTolerance = clockTolerance;
     this.storage = storage || new MemoryStore(clockTolerance);
-    this.onError = typeof onError === "function" ? onError :  (error) => console.error(error);
     this.secretOrPublicKey = secretOrPublicKey instanceof Buffer
       ? secretOrPublicKey : Buffer.from(secretOrPublicKey);
     this.secretOrPrivateKey = secretOrPrivateKey instanceof Buffer
@@ -168,10 +189,11 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
         const token = await sign(payload, this.secretOrPrivateKey, signOptions);
         jwt = decode<JWT<T, K>>(token);
         await this.storage.add(jwt.jti, jwt.exp);
+        await this.onGenerate.dispatchAsync(jwt);
         return token;
       }
     } catch (error) {
-      await this.onError(error, jwt);
+      await this.onError.dispatchAsync(error, jwt);
     }
   }
 
@@ -196,10 +218,11 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
         if (this.verifySubject && ! await this.verifySubject(jwt.sub)) {
           throw new JsonWebTokenError("invalid jwt subject");
         }
+        await this.onVerify.dispatchAsync(jwt);
         return jwt;
       }
     } catch (error) {
-      await this.onError(error, jwt);
+      await this.onError.dispatchAsync(error, jwt);
       // invalidate token if any verification errors was thrown.
       if (error instanceof JsonWebTokenError) {
         await this.invalidate(token);
@@ -210,12 +233,13 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
   /**
    * Verifies the JWT-token extracted *only** from a valid authorization header.
    * @param header Value of 'Authorization' header.
-   * @param schema Valid authorization schema to use.
+   * @param audience Audience to check for. Defaults to provided audience for
+   *                 manager.
    */
-  public async verifyHeader(header: string = "", schema: string = "bearer"): Promise<JWT<T, K> | undefined> {
+  public async verifyHeader(header: string = "", audience?: string | string[]): Promise<JWT<T, K> | undefined> {
     const [schemaValue, token] = header.split(" ");
-    if (schemaValue.toLowerCase() === schema && token) {
-      return this.verify(token);
+    if (schemaValue.toLowerCase() === "bearer" && token) {
+      return this.verify(token, audience);
     }
   }
 
@@ -230,10 +254,11 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
     // The storage may throw, so we wrap it in a try..catch clause
     try {
       if (jwt && jwt.jti && await this.storage.invalidate(jwt.jti)) {
+        await this.onInvalidate.dispatchAsync(jwt);
         return true;
       }
     } catch (error) {
-      await this.onError(error, jwt);
+      await this.onError.dispatchAsync(error, jwt);
     }
     return false;
   }
