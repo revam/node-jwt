@@ -71,30 +71,25 @@
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/jwtmanager.html" class="tsd-kind-icon">JWTManager</a></li>
-								<li class="tsd-kind-class"><a href="classes/memorystore.html" class="tsd-kind-icon">Memory<wbr>Store</a></li>
+								<li class="tsd-kind-class tsd-is-not-exported"><a href="classes/memoryauthority.html" class="tsd-kind-icon">Memory<wbr>Authority</a></li>
 								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/signal.html" class="tsd-kind-icon">Signal</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/jwtgenerateoptions.html" class="tsd-kind-icon">JWTGenerate<wbr>Options</a></li>
-								<li class="tsd-kind-interface"><a href="interfaces/jwtidstore.html" class="tsd-kind-icon">JWTId<wbr>Store</a></li>
-								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/jwtmanageroptions.html" class="tsd-kind-icon">JWTManager<wbr>Options</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/jwtauthority.html" class="tsd-kind-icon">JWTAuthority</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="globals.html#await" class="tsd-kind-icon">Await</a></li>
-								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="globals.html#findsubjectfunction" class="tsd-kind-icon">Find<wbr>Subject<wbr>Function</a></li>
-								<li class="tsd-kind-type-alias"><a href="globals.html#generateidfunction" class="tsd-kind-icon">GenerateIDFunction</a></li>
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="globals.html#jwt" class="tsd-kind-icon">JWT</a></li>
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="globals.html#listener" class="tsd-kind-icon">Listener</a></li>
 								<li class="tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported"><a href="globals.html#methodnames" class="tsd-kind-icon">Method<wbr>Names</a></li>
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="globals.html#methods" class="tsd-kind-icon">Methods</a></li>
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="globals.html#properties" class="tsd-kind-icon">Properties</a></li>
-								<li class="tsd-kind-type-alias"><a href="globals.html#verifysubjectfunction" class="tsd-kind-icon">Verify<wbr>Subject<wbr>Function</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-not-exported">
@@ -104,11 +99,10 @@
 								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#verify" class="tsd-kind-icon">verify</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#decode" class="tsd-kind-icon">decode</a></li>
-								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#pick" class="tsd-kind-icon">pick</a></li>
 							</ul>
 						</section>
 					</div>
@@ -122,92 +116,13 @@
 					<div class="tsd-signature tsd-kind-icon">Await<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in types.ts:4</li>
+							<li>Defined in main.ts:366</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The value is only truly available when awaited or wrapped in a promise.</p>
+							<p>The value is only truly available when wrapped in a promise and resolved.</p>
 						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter">
-					<a name="findsubjectfunction" class="tsd-anchor"></a>
-					<h3>Find<wbr>Subject<wbr>Function</h3>
-					<div class="tsd-signature tsd-kind-icon">Find<wbr>Subject<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in types.ts:23</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Find subject and additional properties to include in token.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>param</dt>
-							<dd><p>Arguments as defined in <code>A</code>.</p>
-							</dd>
-							<dt>returns</dt>
-							<dd><p>subject, subject and additional properties, or undefined.</p>
-							</dd>
-						</dl>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#await" class="tsd-signature-type">Await</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">A</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <a href="globals.html#await" class="tsd-signature-type">Await</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias">
-					<a name="generateidfunction" class="tsd-anchor"></a>
-					<h3>GenerateIDFunction</h3>
-					<div class="tsd-signature tsd-kind-icon">GenerateIDFunction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in types.ts:37</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Generate an unique identifier for JWT token.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>returns</dt>
-							<dd><p>unique identifier.</p>
-							</dd>
-						</dl>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#await" class="tsd-signature-type">Await</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-returns-title">Returns <a href="globals.html#await" class="tsd-signature-type">Await</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter">
@@ -216,7 +131,7 @@
 					<div class="tsd-signature tsd-kind-icon">JWT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Pick</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#properties" class="tsd-signature-type">Properties</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in types.ts:42</li>
+							<li>Defined in main.ts:383</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -262,7 +177,7 @@
 					<div class="tsd-signature tsd-kind-icon">Method<wbr>Names<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">{ [P in keyof T]: T[P] extends (...args: any[]) &#x3D;&gt; any ? P : never; }[keyof T]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in types.ts:6</li>
+							<li>Defined in main.ts:368</li>
 						</ul>
 					</aside>
 				</section>
@@ -272,7 +187,7 @@
 					<div class="tsd-signature tsd-kind-icon">Methods<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Pick</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Exclude</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#methodnames" class="tsd-signature-type">MethodNames</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in types.ts:11</li>
+							<li>Defined in main.ts:373</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -287,57 +202,13 @@
 					<div class="tsd-signature tsd-kind-icon">Properties<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Pick</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Exclude</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">keyof T</span><span class="tsd-signature-symbol">, </span><a href="globals.html#methodnames" class="tsd-signature-type">MethodNames</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in types.ts:16</li>
+							<li>Defined in main.ts:378</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Filter all properties on <code>T</code>, excluding any key from <code>K</code>.</p>
 						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias">
-					<a name="verifysubjectfunction" class="tsd-anchor"></a>
-					<h3>Verify<wbr>Subject<wbr>Function</h3>
-					<div class="tsd-signature tsd-kind-icon">Verify<wbr>Subject<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in types.ts:31</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Verify if subject is still valid.</p>
-						</div>
-						<dl class="tsd-comment-tags">
-							<dt>param</dt>
-							<dd><p>Subject of JWT token.</p>
-							</dd>
-							<dt>returns</dt>
-							<dd><p>subject is valid.</p>
-							</dd>
-						</dl>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>subject<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#await" class="tsd-signature-type">Await</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>subject: <span class="tsd-signature-type">string</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <a href="globals.html#await" class="tsd-signature-type">Await</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</div>
 				</section>
 			</section>
@@ -349,7 +220,7 @@
 					<div class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;promisify&lt;any, Buffer, string&gt;(SIGN)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in main.ts:27</li>
+							<li>Defined in main.ts:14</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -392,7 +263,7 @@
 					<div class="tsd-signature tsd-kind-icon">verify<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;promisify&lt;string, Buffer, any&gt;(VERIFY)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in main.ts:29</li>
+							<li>Defined in main.ts:16</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -430,7 +301,7 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
 					<a name="decode" class="tsd-anchor"></a>
@@ -442,7 +313,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in main.ts:32</li>
+									<li>Defined in main.ts:19</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -452,46 +323,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
-					<a name="pick" class="tsd-anchor"></a>
-					<h3>pick</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">pick&lt;T, K&gt;<span class="tsd-signature-symbol">(</span>t<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, keys<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Pick</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in main.ts:278</li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Pick all properties in <code>keys</code> from <code>t</code>.</p>
-								</div>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T</h4>
-								</li>
-								<li>
-									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof T</span></h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>t: <span class="tsd-signature-type">T</span></h5>
-								</li>
-								<li>
-									<h5>keys: <span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Pick</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -510,29 +341,17 @@
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/jwtmanager.html" class="tsd-kind-icon">JWTManager</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/memorystore.html" class="tsd-kind-icon">Memory<wbr>Store</a>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/memoryauthority.html" class="tsd-kind-icon">Memory<wbr>Authority</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/signal.html" class="tsd-kind-icon">Signal</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/jwtgenerateoptions.html" class="tsd-kind-icon">JWTGenerate<wbr>Options</a>
-					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/jwtidstore.html" class="tsd-kind-icon">JWTId<wbr>Store</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/jwtmanageroptions.html" class="tsd-kind-icon">JWTManager<wbr>Options</a>
+						<a href="interfaces/jwtauthority.html" class="tsd-kind-icon">JWTAuthority</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="globals.html#await" class="tsd-kind-icon">Await</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#findsubjectfunction" class="tsd-kind-icon">Find<wbr>Subject<wbr>Function</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#generateidfunction" class="tsd-kind-icon">GenerateIDFunction</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="globals.html#jwt" class="tsd-kind-icon">JWT</a>
@@ -549,9 +368,6 @@
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="globals.html#properties" class="tsd-kind-icon">Properties</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#verifysubjectfunction" class="tsd-kind-icon">Verify<wbr>Subject<wbr>Function</a>
-					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#sign" class="tsd-kind-icon">sign</a>
 					</li>
@@ -560,9 +376,6 @@
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#decode" class="tsd-kind-icon">decode</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#pick" class="tsd-kind-icon">pick</a>
 					</li>
 				</ul>
 			</nav>

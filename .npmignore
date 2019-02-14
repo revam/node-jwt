@@ -1,9 +1,7 @@
-.vscode/
-node_modules/
-docs/
-test/
-src/
-.env
-ts*.json
-*.tgz
-*.tar.gz
+*
+!lib/**/*
+lib/**/*.map
+!package.json
+!readme.md
+!changelog.md
+!license

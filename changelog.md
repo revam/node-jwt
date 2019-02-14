@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.3.0] - 2019-02-14
+
+### Changed
+
+- Redefined and renamed interface `JWTIdStore`, which stores ALL valid JWT
+  identifiers, to a new iterface `JWTAuthority`, which keeps track of all
+  invalid JWT identifiers untill their Time-To-Live (ttl) expires.
+
+  Because the verify function first checks if the token is expired before
+  checking if the id is valid. So it is more efficent to track all
+  invalidated-but-not-expired token identifiers instead of keeping track of all
+  valid identifiers.
+
+  Also property `storage` in manager options has been replaced by `authority`.
+
+- Merged content from "types.ts" and "memory-store.ts" into main.ts. The
+  in-memory authority does not need to be exported, as it will only be used by
+  the manager, if at all. And the options and function types has been moved into
+  the managers namespace.
+  (e.g. `JWTManagerOptions` -> `JWTManager.Options`,
+  `JWTGenerateOptions` -> `JWTManager.GenerateOptions`, and
+  `FindSubjectFunction` -> `JWTManager.FindSubjectFunction`)
+
+- `JWTManager.VerifyFunction` (renamed from `VerifySubjectFunction`) now
+  provides the JWT-token for verification, and not just the token subject. Use
+  it as you see fit.
+
+- Updated scripts and configuration for project. Transpiled sources has no
+  comments, but transpiled declaraions has comments.
+
+### Removed
+
+- Removed exports `MemoryStore` and `pick`. Create your own or use one from
+  another library.
+
 ## [0.2.2] - 2018-12-26
 
 ### Added
@@ -130,7 +165,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Initial release
 
-[Unreleased]: https://github.com/revam/node-jwt-manager/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/revam/node-jwt-manager/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/revam/node-jwt-manager/compare/v0.2.2...v0.3.0
 [0.2.2]: https://github.com/revam/node-jwt-manager/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/revam/node-jwt-manager/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/revam/node-jwt-manager/compare/v0.1.5...v0.2.0

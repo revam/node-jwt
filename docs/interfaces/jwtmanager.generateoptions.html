@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>JWTGenerateOptions | jwt-manager</title>
+	<title>GenerateOptions | jwt-manager</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="jwtgenerateoptions.html">JWTGenerateOptions</a>
+					<a href="../classes/jwtmanager.html">JWTManager</a>
+				</li>
+				<li>
+					<a href="jwtmanager.generateoptions.html">GenerateOptions</a>
 				</li>
 			</ul>
-			<h1>Interface JWTGenerateOptions&lt;A&gt;</h1>
+			<h1>Interface GenerateOptions&lt;A&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -78,7 +81,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">JWTGenerateOptions</span>
+						<span class="target">GenerateOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -89,8 +92,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="jwtgenerateoptions.html#args" class="tsd-kind-icon">args</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="jwtgenerateoptions.html#notbefore" class="tsd-kind-icon">not<wbr>Before</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="jwtmanager.generateoptions.html#args" class="tsd-kind-icon">args</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="jwtmanager.generateoptions.html#notbefore" class="tsd-kind-icon">not<wbr>Before</a></li>
 							</ul>
 						</section>
 					</div>
@@ -104,7 +107,7 @@
 					<div class="tsd-signature tsd-kind-icon">args<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">A</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in types.ts:139</li>
+							<li>Defined in main.ts:331</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -120,7 +123,7 @@
 					<div class="tsd-signature tsd-kind-icon">not<wbr>Before<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in types.ts:144</li>
+							<li>Defined in main.ts:336</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -142,44 +145,112 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="../classes/jwtmanager.html" class="tsd-kind-icon">JWTManager</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/memorystore.html" class="tsd-kind-icon">Memory<wbr>Store</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="../classes/signal.html" class="tsd-kind-icon">Signal</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-has-type-parameter">
-						<a href="jwtgenerateoptions.html" class="tsd-kind-icon">JWTGenerate<wbr>Options</a>
+					<li class="current tsd-kind-class tsd-has-type-parameter">
+						<a href="../classes/jwtmanager.html" class="tsd-kind-icon">JWTManager</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="jwtgenerateoptions.html#args" class="tsd-kind-icon">args</a>
+							<li class="current tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="jwtmanager.generateoptions.html" class="tsd-kind-icon">Generate<wbr>Options</a>
+								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="jwtmanager.generateoptions.html#args" class="tsd-kind-icon">args</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="jwtmanager.generateoptions.html#notbefore" class="tsd-kind-icon">not<wbr>Before</a>
+									</li>
+								</ul>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="jwtgenerateoptions.html#notbefore" class="tsd-kind-icon">not<wbr>Before</a>
+							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="jwtmanager.options.html" class="tsd-kind-icon">Options</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="../classes/jwtmanager.html#findsubjectfunction" class="tsd-kind-icon">Find<wbr>Subject<wbr>Function</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+								<a href="../classes/jwtmanager.html#generateidfunction" class="tsd-kind-icon">GenerateIDFunction</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="../classes/jwtmanager.html#verifyfunction" class="tsd-kind-icon">Verify<wbr>Function</a>
+							</li>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="../classes/jwtmanager.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="../classes/jwtmanager.html#algorithm" class="tsd-kind-icon">algorithm</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="../classes/jwtmanager.html#audience" class="tsd-kind-icon">audience</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="../classes/jwtmanager.html#expiretime" class="tsd-kind-icon">expire<wbr>Time</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="../classes/jwtmanager.html#expiretolerance" class="tsd-kind-icon">expire<wbr>Tolerance</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="../classes/jwtmanager.html#findsubject" class="tsd-kind-icon">find<wbr>Subject</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="../classes/jwtmanager.html#generateid" class="tsd-kind-icon">generateID</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="../classes/jwtmanager.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="../classes/jwtmanager.html#issuer" class="tsd-kind-icon">issuer</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="../classes/jwtmanager.html#onerror" class="tsd-kind-icon">on<wbr>Error</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="../classes/jwtmanager.html#ongenerate" class="tsd-kind-icon">on<wbr>Generate</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="../classes/jwtmanager.html#oninvalidate" class="tsd-kind-icon">on<wbr>Invalidate</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="../classes/jwtmanager.html#onverify" class="tsd-kind-icon">on<wbr>Verify</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="../classes/jwtmanager.html#secretorprivatekey" class="tsd-kind-icon">secret<wbr>OrPrivate<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="../classes/jwtmanager.html#secretorpublickey" class="tsd-kind-icon">secret<wbr>OrPublic<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="../classes/jwtmanager.html#verifysubject" class="tsd-kind-icon">verify<wbr>Subject</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="../classes/jwtmanager.html#decode" class="tsd-kind-icon">decode</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="../classes/jwtmanager.html#generate" class="tsd-kind-icon">generate</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="../classes/jwtmanager.html#invalidate" class="tsd-kind-icon">invalidate</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="../classes/jwtmanager.html#verify" class="tsd-kind-icon">verify</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="../classes/jwtmanager.html#verifyheader" class="tsd-kind-icon">verify<wbr>Header</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="jwtidstore.html" class="tsd-kind-icon">JWTId<wbr>Store</a>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="../classes/memoryauthority.html" class="tsd-kind-icon">Memory<wbr>Authority</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="jwtmanageroptions.html" class="tsd-kind-icon">JWTManager<wbr>Options</a>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="../classes/signal.html" class="tsd-kind-icon">Signal</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="jwtauthority.html" class="tsd-kind-icon">JWTAuthority</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="../globals.html#await" class="tsd-kind-icon">Await</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="../globals.html#findsubjectfunction" class="tsd-kind-icon">Find<wbr>Subject<wbr>Function</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#generateidfunction" class="tsd-kind-icon">GenerateIDFunction</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="../globals.html#jwt" class="tsd-kind-icon">JWT</a>
@@ -196,9 +267,6 @@
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="../globals.html#properties" class="tsd-kind-icon">Properties</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#verifysubjectfunction" class="tsd-kind-icon">Verify<wbr>Subject<wbr>Function</a>
-					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="../globals.html#sign" class="tsd-kind-icon">sign</a>
 					</li>
@@ -207,9 +275,6 @@
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="../globals.html#decode" class="tsd-kind-icon">decode</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../globals.html#pick" class="tsd-kind-icon">pick</a>
 					</li>
 				</ul>
 			</nav>

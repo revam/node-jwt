@@ -120,6 +120,7 @@
     "no-console": false,
     "no-default-export": false,
     "no-magic-numbers": false,
+    "no-namespace": false,
     "no-parameter-properties": false,
     "no-parameter-reassignment": false,
     "no-unused-variable": false,
