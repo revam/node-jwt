@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.3.1] - 2019-04-05
+
+### Fixed
+
+- Fixed incorrect type for `Options.verifySubject`. Should pass type parameters
+  to child type.
+
 ## [0.3.0] - 2019-02-14
 
 ### Changed

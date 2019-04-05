@@ -1,6 +1,6 @@
 {
   "name": "jwt-manager",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Server-side manager for active JSON Web Tokens (JWTs)",
   "private": true,
   "main": "lib/main.js",

@@ -316,7 +316,7 @@ export namespace JWTManager {
     /**
      * Verify if subject is still valid.
      */
-    verifySubject?: VerifyFunction;
+    verifySubject?: VerifyFunction<T, K>;
     /**
      * Generate an unique identifier for JWT token.
      */
