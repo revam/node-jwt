@@ -98,7 +98,7 @@ Documentation is available online at
 [http://localhost:8080/](http://localhost:8080/) with the following command:
 
 ```sh
-$ npm run-script docs
+$ npm run-script serve:docs
 ```
 
 ## Typescript

@@ -13,11 +13,12 @@
     "build:docs": "typedoc --mode file --out docs",
     "cleanup": "del-cli lib",
     "cleanup:docs": "del-cli docs",
-    "docs": "cd docs && serve -n --listen tcp://localhost:8080",
+    "serve:docs": "cd docs && serve -n --listen tcp://localhost:8080",
     "lint:src": "tslint -p .",
     "lint:test": "tslint -p test",
     "prebuild": "npm run lint:src && npm run cleanup",
     "prebuild:docs": "npm run cleanup:docs",
+    "predocs": "npm run build:docs",
     "pretest": "npm run lint:test",
     "prepare": "npm run build",
     "test": "echo \"Error: no target spesified\" && exit 1"
