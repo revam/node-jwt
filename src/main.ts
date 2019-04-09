@@ -20,21 +20,28 @@ const decode: <T>(token: string) => T
 
 /**
  * Simple class responsable for creating, verifying and invalidating JSON Web
- * Tokens. Additional fields added to token is left to the application to choose.
+ * Tokens.
+ *
+ * @remarks
+ *
+ * Additional fields added to token is left to the application to
+ * choose.
  */
-export class JWTManager<A extends any[], T = never, K extends keyof Properties<T> = keyof Properties<T>> {
+export class JWTManager<TArgs extends any[], T = never, TKeys extends keyof Properties<T> = keyof Properties<T>> {
   /**
-   * Either the secret for HMAC algorithms, or the PEM encoded public key for RSA and ECDSA.
+   * Either the secret for HMAC algorithms, or the PEM encoded public key for
+   * RSA and ECDSA.
    */
   private readonly secretOrPublicKey: Buffer;
 
   /**
-   * Either the secret for HMAC algorithms, or the PEM encoded private key for RSA and ECDSA.
+   * Either the secret for HMAC algorithms, or the PEM encoded private key for
+   * RSA and ECDSA.
    */
   private readonly secretOrPrivateKey: Buffer;
 
   /**
-   * Algorithm.
+   * Algorithm used for generating signature.
    */
   private readonly algorithm: string;
 
@@ -44,7 +51,7 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
   private readonly audience: string[];
 
   /**
-   * Issuer.
+   * The domain issuing JSON Web Tokens (JWTs).
    */
   protected readonly issuer: string;
 
@@ -70,12 +77,12 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
   /**
    * Find subject and additional properties to include in token.
    */
-  private readonly findSubject: JWTManager.FindSubjectFunction<A, T, K>;
+  private readonly find: JWTManager.FindSubjectFunction<TArgs, T, TKeys>;
 
   /**
    * Verify if subject is still valid.
    */
-  private readonly verifySubject?: JWTManager.VerifyFunction<T, K>;
+  private readonly verifyCustom?: JWTManager.VerifyFunction<T, TKeys>;
 
   /**
    * Generate an unique identifier for JWT token.
@@ -84,50 +91,65 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
 
   /**
    * Dispatched on successful generation of a new token.
+   *
+   * @remarks
+   *
    * Errors thrown by listeners are handled in the `onError` signal.
    */
-  public readonly onGenerate: Signal<[JWT<T, K>]> = new Signal();
+  public readonly onGenerate: Signal<[JWT<T, TKeys>]> = new Signal();
 
   /**
    * Dispatched on successful verification of a token.
+   *
+   * @remarks
+   *
    * Errors thrown by listeners are handled in the `onError` signal.
    */
-  public readonly onVerify: Signal<[JWT<T, K>]> = new Signal();
+  public readonly onVerify: Signal<[JWT<T, TKeys>]> = new Signal();
 
   /**
    * Dispatched on successful invalidation of a token.
+   *
+   * @remarks
+   *
    * Errors thrown by listeners are handled in the `onError` signal.
    */
-  public readonly onInvalidate: Signal<[JWT<T, K>]> = new Signal();
+  public readonly onInvalidate: Signal<[JWT<T, TKeys>]> = new Signal();
 
   /**
-   * Dispatched when any error is thrown from other methods and/or signals.
+   * Dispatched when any error is thrown from other class methods and/or
+   * signals.
    */
-  public readonly onError: Signal<[any, JWT<T, K>?]> = new Signal();
+  public readonly onError: Signal<[any, JWT<T, TKeys>?]> = new Signal();
 
-  public constructor(options: JWTManager.Options<A, T, K>);
+  /**
+   * Create a new instance of {@link JWTManager}.
+   *
+   * @param options - Mandatory {@link JWTManager.Options | options}.
+   */
+  public constructor(options: JWTManager.Options<TArgs, T, TKeys>);
   public constructor({
     algorithm = "HS256",
     clockTolerance = 10,
     expireTime = 3600, // 60 * 60 = 3,600
-    findSubject,
+    find,
     generateID,
-    authority: storage,
+    authority,
     issuer = "localhost",
     audience = issuer,
     secretOrPublicKey = "",
     secretOrPrivateKey = secretOrPublicKey,
-    verifySubject,
-  }: JWTManager.Options<A, T, K>) {
+    verify: verifyCustom,
+  }: JWTManager.Options<TArgs, T, TKeys>) {
     this.algorithm = algorithm;
-    this.findSubject = findSubject;
-    this.verifySubject = verifySubject;
+    this.find = find;
+    this.verifyCustom = verifyCustom;
     this.generateID = generateID;
     this.issuer = issuer;
     this.audience = typeof audience === "string" ? [audience] : audience;
     this.expireTime = expireTime;
     this.expireTolerance = clockTolerance;
-    this.id = storage || new MemoryAuthority();
+    this.id = authority || new MemoryAuthority();
     this.secretOrPublicKey = secretOrPublicKey instanceof Buffer
       ? secretOrPublicKey : Buffer.from(secretOrPublicKey);
     this.secretOrPrivateKey = secretOrPrivateKey instanceof Buffer
@@ -135,17 +157,21 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
   }
 
   /**
-   * Create a new token for user if subject can be abstracted from
-   * @param options Generate options. Args must be supplied.
-   * @returns a new JWT token if successful.
+   * Create a new token if {@link JWT.sub | subject} can be extracted from
+   * {@link JWTManager.GenerateOptions | options}.
+   * {@link JWTManager.GenerateOptions.args | Arguments} must be supplied.
+   *
+   * @param options - Mandatory {@link JWTManager.GenerateOptions | options}.
+   * @returns Returns a new JWT token if successfull, otherwise returns
+   *          `undefined`.
    */
-  public async generate(options: JWTManager.GenerateOptions<A>): Promise<string | undefined> {
-    let jwt: JWT<T, K> | undefined;
+  public async generate(options: JWTManager.GenerateOptions<TArgs>): Promise<string | undefined> {
+    let jwt: JWT<T, TKeys> | undefined;
     try {
-      const result = await this.findSubject(...options.args);
+      const result = await this.find(...options.args);
       if (result) {
         let subject: string | undefined;
-        let payload: Properties<T, K> | {} = {};
+        let payload: Properties<T, TKeys> | {} = {};
         if (typeof result === "object") {
           if (result instanceof Array) {
             subject = result[0];
@@ -167,14 +193,14 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
           audience: this.audience,
           expiresIn: this.expireTime,
           issuer: this.issuer,
-          jwtid: await this.generateID(),
+          jwtid: this.generateID(),
           subject,
         };
         if (options.notBefore) {
           signOptions.notBefore = options.notBefore;
         }
         const token = await sign(payload, this.secretOrPrivateKey, signOptions);
-        jwt = decode<JWT<T, K>>(token);
+        jwt = decode<JWT<T, TKeys>>(token);
         await this.onGenerate.dispatchAsync(jwt);
         return token;
       }
@@ -184,15 +210,22 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
   }
 
   /**
-   * Verifies the JWT-token.
-   * @param token JSON Web Token to verify
-   * @param audience Audience to check for. Defaults to provided audience for
-   *                 manager.
+   * Verifies the signature integrity, experation time and, if defined, custom
+   * logic provided in {@link JWTManager.Options.verify | options}.
+   *
+   * @param token - JSON Web Token (JWT) to vefiy and decode.
+   * @param audience - Audience to check token for. Defaults to provided
+   *                   audience for manager.
+   * @returns Returns the decoded contents of token if `token` is successfully
+   *          verified, returns `undefined` otherwise.
    */
-  public async verify(token: string = "", audience: string | string[] = this.audience): Promise<JWT<T, K> | undefined> {
-    let jwt: JWT<T, K> | undefined;
+  public async verify(token: string, audience: string | string[] = this.audience): Promise<JWT<T, TKeys> | undefined> {
+    let jwt: JWT<T, TKeys> | undefined;
     try {
-      jwt = await verify<JWT<T, K>>(token, this.secretOrPublicKey, {
+      if (!token || !token.length) {
+        throw new TypeError("Token must be provided and not be empty.");
+      }
+      jwt = await verify<JWT<T, TKeys>>(token, this.secretOrPublicKey, {
         audience,
         clockTolerance: this.expireTolerance,
         issuer: this.issuer,
@@ -201,8 +234,8 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
         if (! await this.id.validate(jwt.jti)) {
           throw new JsonWebTokenError("invalid jwt identifier");
         }
-        if (this.verifySubject && ! await this.verifySubject(jwt)) {
-          throw new JsonWebTokenError("invalid jwt subject");
+        if (this.verifyCustom && ! await this.verifyCustom(jwt)) {
+          throw new JsonWebTokenError("invalid jwt in custom rules");
         }
         await this.onVerify.dispatchAsync(jwt);
         return jwt;
@@ -217,12 +250,24 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
   }
 
   /**
-   * Verifies the JWT-token extracted *only** from a valid authorization header.
-   * @param header Value of 'Authorization' header.
-   * @param audience Audience to check for. Defaults to provided audience for
+   * Verifies and retrns the decoded token extracted from a valid
+   * [authorization header](https://developer.mozilla.org/docs/Web/HTTP/Headers/Authorization).
+   *
+   * @remarks
+   *
+   * Will not extract or verify a token if header is not valid, or if token is
+   * invalid.
+   *
+   * Also see {@link JWTManager.verify}.
+   *
+   * @param header - Value of '[Authorization](https://developer.mozilla.org/docs/Web/HTTP/Headers/Authorization)'
+   *                 header.
+   * @param audience - Audience to check for. Defaults to provided audience for
    *                 manager.
+   * @returns Returns the decoded contents of token if `token` is successfully
+   *          verified, returns `undefined` otherwise.
    */
-  public async verifyHeader(header: string = "", audience?: string | string[]): Promise<JWT<T, K> | undefined> {
+  public async verifyHeader(header: string = "", audience?: string | string[]): Promise<JWT<T, TKeys> | undefined> {
     const [schemaValue, token] = header.split(" ");
     if (schemaValue.toLowerCase() === "bearer" && token) {
       return this.verify(token, audience);
@@ -230,16 +275,19 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
   }
 
   /**
-   * Invalidates given JWT-token.
-   * @param jwt JSON Web Token to invalidate, either stringified or decoded.
+   * Invalidates given JWT-token, either encoded or decoded.
+   *
+   * @param jwt - JSON Web Token to invalidate, either stringified or decoded.
+   * @returns Returns `true` if token was successfully invalidated with
+   *          {@link JWTAuthority | id-authorities}, returns false otherwise.
    */
-  public async invalidate(jwt?: string | JWT<T, K>): Promise<boolean> {
+  public async invalidate(jwt?: string | JWT<T, TKeys>): Promise<boolean> {
     if (typeof jwt === "string") {
       jwt = this.decode(jwt);
     }
     // The storage may throw, so we wrap it in a try..catch clause
     try {
-      if (jwt && jwt.jti && await this.id.invalidate(jwt.jti, jwt.exp * 1000)) {
+      if (jwt && jwt.jti && (jwt.exp ? await this.id.invalidate(jwt.jti, jwt.exp) : true)) {
         await this.onInvalidate.dispatchAsync(jwt);
         return true;
       }
@@ -251,17 +299,27 @@ export class JWTManager<A extends any[], T = never, K extends keyof Properties<T
 
   /**
    * Decode a token without verifying if it is valid or safe to use.
-   * @param token JSON Web Token to decode.
+   *
+   * @param token - Stringified JSON Web Token (JWT) to decode.
    */
-  public decode(token: string = ""): JWT<T, K> | undefined {
-    return token ? decode<JWT<T, K>>(token) : undefined;
+  public decode(token?: string): JWT<T, TKeys> | undefined {
+    if (typeof token === "string" && token.length > 0) {
+      return decode<JWT<T, TKeys>>(token);
+    }
   }
 }
 
 export namespace JWTManager {
-  export interface Options<A extends any[], T = never, K extends keyof Properties<T> = keyof Properties<T>> {
+  /**
+   * Options for constructor of {@link JWTManager}.
+   */
+  export interface Options<TArgs extends any[], T = never, TKeys extends keyof Properties<T> = keyof Properties<T>> {
     /**
-     * Signature algorithm. Could be one of these values :
+     * Signature algorithm.
+     *
+     * @remarks
+     *
+     * Could be one of these values :
      * - HS256:    HMAC using SHA-256 hash algorithm (default)
      * - HS384:    HMAC using SHA-384 hash algorithm
      * - HS512:    HMAC using SHA-512 hash algorithm
@@ -275,16 +333,27 @@ export namespace JWTManager {
      */
     algorithm?: "HS256" | "HS384" | "HS512" | "RS256" | "RS384" | "RS512" | "ES256" | "ES384" | "ES512" | "none";
     /**
-     * Valid audience for token. Defaults to the same as value as field `issuer`.
+     * Valid audience for token.
+     *
+     * @remarks
+     *
+     * Defaults to the same as value as field `issuer`.
      */
     audience?: string | string[];
     /**
-     * Issuer authority. Defaults to `"localhost"`.
+     * Issuer authority.
+     *
+     * @remarks
+     *
+     * Defaults to `"localhost"`.
      */
     issuer?: string;
     /**
-     * Token expiration time.
-     * Expressed in seconds or a string describing a timespan, e.g. "1 min".
+     * Token expiration time, expressed in seconds or a string describing a
+     * timespan, e.g. "1 min".
+     *
+     * @remarks
+     *
      * Defaults to `3600`.
      */
     expireTime?: string | number;
@@ -295,16 +364,20 @@ export namespace JWTManager {
      */
     clockTolerance?: number;
     /**
-     * Either the secret for HMAC algorithms, or the PEM encoded public key for RSA and ECDSA.
+     * Either the secret for HMAC algorithms, or the PEM encoded public key for
+     * RSA and ECDSA.
      */
     secretOrPublicKey?: string | Buffer;
     /**
-     * Either the secret for HMAC algorithms, or the PEM encoded private key for RSA and ECDSA.
+     * Either the secret for HMAC algorithms, or the PEM encoded private key for
+     * RSA and ECDSA.
      */
     secretOrPrivateKey?: string | Buffer;
     /**
      * Keeps track of all invalidated tokens until their TTL ends, and helps
      * validate and invalidate JWT identifiers.
+     *
+     * @remarks
      *
      * Will use an in-memory based authority if none is supplied.
      */
@@ -312,23 +385,31 @@ export namespace JWTManager {
     /**
      * Find subject and additional properties to include in token.
      */
-    findSubject: FindSubjectFunction<A, T, K>;
+    find: FindSubjectFunction<TArgs, T, TKeys>;
     /**
      * Verify if subject is still valid.
+     *
+     * @remarks
+     *
+     * This is custom logic in addition to the default verification logic,
+     * i.e. verify custom fields and/or values in decoded token.
      */
-    verifySubject?: VerifyFunction<T, K>;
+    verify?: VerifyFunction<T, TKeys>;
     /**
      * Generate an unique identifier for JWT token.
      */
     generateID: GenerateIDFunction;
   }
 
-  export interface GenerateOptions<A extends any[]> {
+  /**
+   * Options for {@link JWTManager.generate}.
+   */
+  export interface GenerateOptions<TArgs extends any[]> {
     /**
      * Arguments are forwarded to the `FindSubjectFunction` registered with the
      * manager.
      */
-    args: A;
+    args: TArgs;
     /**
      * Not valid before this timespan have past.
      * Expressed in seconds or a string describing a timespan, e.g. "1 min".
@@ -338,25 +419,28 @@ export namespace JWTManager {
 
   /**
    * Find subject and additional properties to include in token.
-   * @param args Arguments as defined in `A`.
+   *
+   * @param args - Arguments as defined in `A`.
    * @returns subject, subject and additional properties, or undefined.
    */
-  export type FindSubjectFunction<A extends any[], T = never, K extends keyof Properties<T> = keyof Properties<T>>
-    = (...args: A) => Await<string | [string, Pick<Properties<T>, K>?] | ({ sub: string } & Pick<Properties<T>, K>) | undefined>;
+  export type FindSubjectFunction<TArgs extends any[], T = never, TKeys extends keyof Properties<T> = keyof Properties<T>>
+    = (...args: TArgs) => Await<string | [string, Properties<T, TKeys>?] | ({ sub: string } & Properties<T, TKeys>) | undefined>;
 
   /**
    * Verify if token is still valid.
-   * @param jwt Decoded JSON Web Token (JWT)
+   *
+   * @param jwt - Decoded JSON Web Token (JWT)
    * @returns token is valid.
    */
-  export type VerifyFunction<T = never, K extends keyof Properties<T> = keyof Properties<T>>
-    = (jwt: JWT<T, K>) => Await<boolean | undefined>;
+  export type VerifyFunction<T = never, TKeys extends keyof Properties<T> = keyof Properties<T>>
+    = (jwt: JWT<T, TKeys>) => Await<boolean | undefined>;
 
   /**
    * Generate an unique identifier for JWT token.
+   *
    * @returns an unique identifier for token.
    */
-  export type GenerateIDFunction = () => Await<string>;
+  export type GenerateIDFunction = () => string;
 
 }
 
@@ -373,40 +457,40 @@ type MethodNames<T> = { [P in keyof T]: T[P] extends (...args: any[]) => any ? P
 export type Methods<T, K extends keyof T = never> = Pick<T, Exclude<MethodNames<T>, K>>;
 
 /**
- * Filter all properties on `T`, excluding any key from `K`.
+ * Filter selected properties on `T`, as restricted by `K`.
  */
-export type Properties<T, K extends keyof T = never> = Pick<T, Exclude<keyof T, MethodNames<T> | K>>;
+export type Properties<T, TKeys extends keyof T = keyof T> = Pick<T, Exclude<TKeys, MethodNames<T>>>;
 
 /**
- * JSON Web Token, with additional properties from `T` as restricted by `K`.
+ * JSON Web Token, with additional properties from `T`, as restricted by `K`.
  */
-export type JWT<T = never, K extends keyof Properties<T> = keyof Properties<T>> = Readonly<Pick<Properties<T>, K>> & {
+export type JWT<T = never, TKeys extends keyof Properties<T> = keyof Properties<T>> = Readonly<Properties<T, TKeys>> & {
   /**
-   * JWT Identifier
+   * Unique identifier for this JSON Web Token (JWT).
    */
   readonly jti: string;
   /**
-   * Subject
+   * Subject associated with this JSON Web Token (JWT).
    */
   readonly sub: string;
   /**
-   * Issuer
+   * Domain of issuer for this JSON Web Token (JWT).
    */
   readonly iss: string;
   /**
-   * Audience (as an array)
+   * Audience domains for this JSON Web Token (JWT).
    */
   readonly aud: string[];
   /**
-   * Expiration Time (in seconds)
+   * Timestamp this JSON Web Token (JWT) will expire, given in seconds.
    */
   readonly exp: number;
   /**
-   * Issued At (in seconds)
+   * Timestamp this JSON Web Token (JWT) was issued, given in seconds.
    */
   readonly iat: number;
   /**
-   * Not (valid) Before (in seconds)
+   * Timestamp from when this JSON Web Token (JWT) is valid, given in seconds.
    */
   readonly nbf?: number;
 };
@@ -417,49 +501,43 @@ export type JWT<T = never, K extends keyof Properties<T> = keyof Properties<T>> 
  */
 export interface JWTAuthority {
   /**
-   * Invalidate {@link identifier} from authorities. An estimated time-to-live
+   * Invalidate `jti` from authorities. An estimated time-to-live (`eTTL`)
    * is also provided.
    *
-   * @param jti JSON Web Token (JWT) identifier, as generated by the manager.
-   * @param eTTL Estimated Time-To-Live, in milliseconds.
-   * @returns Returns {@link true} if {@link JWTId} has been invalidated,
-   *          returns {@link false} otherwise.
+   * @param jti - JSON Web Token (JWT) identifier.
+   * @param eTTL - Estimated time-to-live, given in seconds.
+   * @returns Returns `true` if invalidatation was successful, returns `false`
+   *          otherwise.
    */
   invalidate(jti: string, eTTL: number): Promise<boolean>;
   /**
-   * Validate if {@link identifier} is a valid JSON Web Token (JWT) id with
-   * authorities.
+   * Validate `jti` with authorities.
    *
-   * @param jti JSON Web Token (JWT) identifier, as generated by the manager.
-   * @returns Returns {@link true} if {@link JWTId} is still valid,
-   *          returns {@link false} otherwise.
+   * @param jti - JSON Web Token (JWT) identifier.
+   * @returns Returns `true` if validation was successful, returns `false`
+   *          otherwise.
    */
   validate(jti: string): Promise<boolean>;
 }
 
 /**
- * Simple implementation of an in-memory `JWTIdStore`.
+ * Simple implementation of an in-memory {@link JWTAuthority}.
  */
 class MemoryAuthority implements JWTAuthority {
   /* @internal */
-  private readonly map: Map<string, number | undefined> = new Map();
+  private readonly map: Map<string, NodeJS.Timeout> = new Map();
 
   public async validate(key: string): Promise<boolean> {
-    const timestamp = this.map.get(key);
-    if (timestamp) {
-      const now = Math.floor(Date.now() / 1000);
-      // Check if the timestamp is less than the current time,
-      if (timestamp < now) {
-        // and remove timestamp if true.
-        this.map.delete(key);
-      }
-      return false;
-    }
-    return true;
+    return !this.map.has(key);
   }
 
-  public async invalidate(key: string): Promise<boolean> {
-    return this.map.delete(key);
+  public async invalidate(key: string, exp: number): Promise<boolean> {
+    if (this.map.has(key)) {
+      return false;
+    }
+    const ref = setTimeout(() => this.map.delete(key), exp * 1000);
+    this.map.set(key, ref);
+    return true;
   }
 
   public async clear(): Promise<void> {

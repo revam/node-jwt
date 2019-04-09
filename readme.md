@@ -35,44 +35,60 @@ $ npm install --save https://git.lan/mist@node/jwt-manager@v$VERSION/npm-pack.tg
 ## Usage
 
 **Note:** `await` is not actually available in the global context, but let's
-assume it is for this example.
+assume it is for the following example.
 
 ```js
-import JWTManager from "jwt-manager";
+import { JWTManager } from "@revam/jwt";
 
-// Example user
+// Our example user
 const user = {
   id: "00000000-0000-0000-0000-000000000000",
   name: "John Smith",
   username: "josm",
 };
 
-const jm = new JWTManager({
-  findSubject(test, test2, ...testRest) {
-    console.log("%s %s %s", test, test2, testRest.join(" "));
-    if (test === "this" && test2 === "is" && testRest[0] === "SPARTA") {
-      return [user.id, {name: user.name}]
+// Our id stack
+let idCount = 0;
+
+// Create a new manager instance, "find" and "generateID" are both mandatory.
+const jm = new { JWTManager }({
+  // Find subject (and optional custom fields) with arguments provided to
+  // `{ JWTManager }.generate({args})`.
+  find(...args) {
+    console.log(args.join(" "));
+    // Our (open) secret combination of arguments to find our example user.
+    if (args.length === 3 && args[0] === "this" && args[1] === "is" && args[2] === "SPARTA") {
+      return { sub: user.id, name: user.name };
     }
-  }
+  },
+  // Generate an unique identifier for token
+  generateID: () => (++idCount).toString(),
+  // Custom verification of content, e.g. verify subject or custom fields.
+  verify(jwt) {
+    return jwt.sub === user.id && jwt.name === "John Smith";
+  },
 });
 
-let token;
+// Return undefined if no subject could be found with given arguments.
+let token = await jm.generate({ args: ["this", "is", "GREEK"]}); // `token` is `undefined`.
 
-// We know if we provid the three arguments "this", "is", and "SPARTA" we get
-// a signed token for our user data.
-token = await jm.add({ args: ["this", "is", "SPARTA"]}); // token is "<header>.<payload>.<signature>"
+// From above we know if we provide the three arguments "this", "is", and
+// "SPARTA" we get a signed token for our example user.
+token = await jm.generate({ args: ["this", "is", "SPARTA"]}); // `token` is a valid jwt, for our manager at least.
 
-// If we cannot find a subject with given arguments, then no token will be returned.
-token = await jm.add({ args: ["this", "is", "GREEK"]}); // token is undefined
-
-// Verifies an existing __signed__ token, and returns its decoded value if signature matches.
-let obj = await jm.verify(token);
+// Verifies an existing signed token, and returns the decoded content if successfull.
+let obj1 = await jm.verify(token); // `obj1` is an object holding the decoded fields and values of the token payload.
 
 // Decodes token without verifying signature or content.
-let obj2 = jm.decode(token);
+let obj2 = jm.decode(token);// `obj` is an object holding the decoded fields and values of the token payload.
 
-// invalidates token or obj.
-await jm.invalidate(token || obj); // true if token or obj is now invalid.
+// Invalidates either a stringified or decoded token.
+let result = await jm.invalidate(token || obj1); // return true if token or obj is now invalid.
+
+// Since we just invalidated the token above, the verification will fail, and
+// the object below will be `undefined`.
+let obj3 = await jm.verify(token); // `obj3` is `undefined`
+
 ```
 
 ## Documentation
