@@ -1,6 +1,6 @@
-# jwt-manager
+# @revam/jwt
 
-Server-side manager for active JSON Web Tokens (JWTs)
+Server-side managing of JSON Web Tokens (JWTs)
 
 ## Install
 
@@ -11,7 +11,7 @@ Server-side manager for active JSON Web Tokens (JWTs)
 **Note:** Replace `$VERSION` with the version number.
 
 ```sh
-$ npm install --save https://github.com/revam/node-jwt-manager/releases/download/v$VERSION/package.tgz
+$ npm install --save https://github.com/revam/node-jwt/releases/download/v$VERSION/package.tgz
 ```
 
 ### Install from git.lan:
@@ -21,7 +21,7 @@ Internet people can ignore this section.
 #### Latest release:
 
 ```sh
-$ npm install --save https://git.lan/mist@node/jwt-manager@latest/npm-pack.tgz
+$ npm install --save https://git.lan/mist@node/jwt@latest/npm-pack.tgz
 ```
 
 #### Spesific release:
@@ -29,7 +29,7 @@ $ npm install --save https://git.lan/mist@node/jwt-manager@latest/npm-pack.tgz
 **Note:** Replace `$VERSION` with the version number.
 
 ```sh
-$ npm install --save https://git.lan/mist@node/jwt-manager@v$VERSION/npm-pack.tgz
+$ npm install --save https://git.lan/mist@node/jwt@v$VERSION/npm-pack.tgz
 ```
 
 ## Usage
@@ -94,7 +94,7 @@ let obj3 = await jm.verify(token); // `obj3` is `undefined`
 ## Documentation
 
 Documentation is available online at
-[GitHub Pages](https://revam.github.io/node-jwt-manager/), or locally at
+[GitHub Pages](https://revam.github.io/node-jwt/), or locally at
 [http://localhost:8080/](http://localhost:8080/) with the following command:
 
 ```sh
