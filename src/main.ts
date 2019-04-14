@@ -501,15 +501,19 @@ export type JWT<T = never, TKeys extends keyof Properties<T> = keyof Properties<
  */
 export interface JWTAuthority {
   /**
-   * Invalidate `jti` from authorities. An estimated time-to-live (`eTTL`)
-   * is also provided.
+   * Invalidate `jti` from authorities.
+   *
+   * @remarks
+   *
+   * The expire time is also provided, in cases where the key is to-be kept for
+   * a limited period of time.
    *
    * @param jti - JSON Web Token (JWT) identifier.
-   * @param eTTL - Estimated time-to-live, given in seconds.
+   * @param exp - Timestamp token will naturally expire, given in seconds.
    * @returns Returns `true` if invalidatation was successful, returns `false`
    *          otherwise.
    */
-  invalidate(jti: string, eTTL: number): Promise<boolean>;
+  invalidate(jti: string, exp: number): Promise<boolean>;
   /**
    * Validate `jti` with authorities.
    *
