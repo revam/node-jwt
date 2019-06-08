@@ -21,7 +21,7 @@ Internet people can ignore this section.
 #### Latest release:
 
 ```sh
-$ npm install --save https://git.lan/mist@node/jwt@latest/npm-pack.tgz
+$ npm install --save https://git.lan/mist@node/jwt.art@latest/npm.tgz
 ```
 
 #### Spesific release:
@@ -29,7 +29,7 @@ $ npm install --save https://git.lan/mist@node/jwt@latest/npm-pack.tgz
 **Note:** Replace `$VERSION` with the version number.
 
 ```sh
-$ npm install --save https://git.lan/mist@node/jwt@v$VERSION/npm-pack.tgz
+$ npm install --save https://git.lan/mist@node/jwt.art@v$VERSION/npm.tgz
 ```
 
 ## Usage
