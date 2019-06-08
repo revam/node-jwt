@@ -58,9 +58,12 @@ const user: User = {
 let idCount: number = 0;
 
 // Create a new manager instance, "find" and "generateID" are both mandatory.
-const jtm: JWTManager = new JWTManager({
+const jtm: JWTManager = new JWTManager<["this", "is", "SPARTA"] | any[], User, "name">({
   // Find subject (and optional custom fields) with arguments provided to
   // `JWTManager.generate({args})`.
+  // Type definition of `args` is infered from the first type parameterer above.
+  // Possible type definitions of return value is determinded by the second (and
+  // third) type parameter above.
   find(...args: ["this", "is", "SPARTA"] | any[]): { sub: string; } & Pick<User, "name"> {
     console.log(args.join(" "));
     // Our (open) secret combination of arguments to find our example user.

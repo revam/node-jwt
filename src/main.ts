@@ -26,6 +26,10 @@ const decode: <T>(token: string) => T
  *
  * Additional fields added to token is left to the application to
  * choose.
+ * @typeParam TArgs - Definition of arguments for
+ *                    {@link (JWTManager:namespace).Options.find | find function.}
+ * @typeParam T - Object to take additional properties from.
+ * @typeParam TKeys - Name of keys to include in {@link JWT | token} from `T`.
  */
 export class JWTManager<TArgs extends any[], T = never, TKeys extends keyof Properties<T> = keyof Properties<T>> {
   /**
